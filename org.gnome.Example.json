@@ -1,0 +1,33 @@
+{
+    "id" : "org.gnome.Example",
+    "runtime" : "org.freedesktop.Platform",
+    "runtime-version" : "23.08",
+    "sdk" : "org.freedesktop.Sdk",
+    "command" : "plymouth-creator-by_sreetx",
+    "finish-args" : [
+    ],
+    "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "/man",
+        "/share/doc",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "*.la",
+        "*.a"
+    ],
+    "modules" : [
+        {
+            "name" : "plymouth-creator-by_sreetx",
+            "builddir" : true,
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "file:///home/programmer/Documents"
+                }
+            ]
+        }
+    ]
+}

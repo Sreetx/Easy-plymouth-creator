@@ -1,2 +1,3 @@
-# Easy-plymouth-creator
-Alat untuk memudahkan para user linux dalam mengkonfigurasi tampilan animasi boot mereka
+# plymouth-creator-by_sreetx
+
+A description of this project.
