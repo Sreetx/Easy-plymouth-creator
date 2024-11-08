@@ -9,6 +9,6 @@ cara penggunaanya juga sangat mudah, gak usah ribet mikir mau gimana buat konfig
 
 # YouTube 
 
-    https://youtube.com/@linggachannel4781|
+    https://youtube.com/@linggachannel4781
 
 Support terus channel kita yaa, supaya gw makin semangat berkarya atas dukungan dari kalian semua =)
