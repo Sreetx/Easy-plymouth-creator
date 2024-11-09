@@ -63,5 +63,5 @@ banners = orange+"""
  +===========================================+
 
  """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Harap gunakan sudo agar program berjalan lancar
- """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Jumlah gamabr(frame) yg digunakan untuk boot animation tidak boleh lebih dari 100, meeledak nanti pc lu
+ """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Jumlah gambar(frame) yg digunakan untuk boot animation tidak boleh lebih dari 100, meeledak nanti pc lu
  """+reset
