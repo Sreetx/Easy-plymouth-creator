@@ -59,9 +59,9 @@ banners = orange+"""
  | """+putih+"""Author: """+hijau+"""Sreetx       """+orange+"""                     |
  | """+putih+"""Yt: """+hijau+"""https://youtube.com/@linggachannel4781"""+orange+"""|
  | """+putih+"""Github: """+hijau+"""https://github.com/Sreetx  """+orange+"""       |
- | """+putih+"""Version: """+biru+"""1.3.7        """+orange+"""                    |
+ | """+putih+"""Version: """+biru+"""1.4.8        """+orange+"""                    |
  +===========================================+
 
  """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Harap gunakan sudo agar program berjalan lancar
- """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Jumlah gamabr(frame) yg digunakan untuk boot animation tidak boleh lebih dari 100, meeledak nanti pc lu
+ """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Jumlah video dengan durasi dibawah 10 detik agar boot animation dapat berjalan dengan baik
  """+reset
