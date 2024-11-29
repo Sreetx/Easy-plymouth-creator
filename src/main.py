@@ -48,9 +48,21 @@ def main():
  """+putih+"""["""+banhijau+"""1"""+reset+putih+"""] Convert gif/video file to image(.png)
  """+putih+"""["""+banhijau+"""2"""+reset+putih+"""] Create new boot animation!
  """+putih+"""["""+banhijau+"""3"""+reset+putih+"""] Manual Change boot animation
+ """+putih+"""["""+banhijau+"""4"""+reset+putih+"""] Hapus Boot Animation
  """
         print(pilih)
         mulai = input(kelabu+" ["+banorange+">"+reset+kelabu+"]"+orange+" Input: ")
+        if mulai.lower() == "4":
+            print(putih+" ["+merah+"4"+putih+"]"+putih+" Penghapus boot animation!")
+            print(putih+"["+banmerah+"W"+reset+putih+"] Pastikan sebelum menghapus boot animation, kamu sudah mengubah boot animation kamu ke yang lain")
+            print(kelabu+"["+hijau+">"+kelabu+"]"+putih+" Daftar Boot animation yang ada")
+            subprocess.run(['ls', '/usr/share/plymouth/themes'])
+            s = input(putih+"["+orange+">"+putih+"]: ")
+            try:
+                subprocess.run(['rm', '-r', '/usr/share/plymouth/themes/'+s], check=True)
+                print(kelabu+" ["+banhijau+"✔️"+reset+kelabu+"]"+putih+" Berhasil dihapus")
+            except subprocess.CalledProcessError:
+                print(kelabu+" ["+banmerah+"!"+reset+kelabu+"]"+putih+"Terjadi kesalahan saat menghapus atau folder memang tidak ada")
         if mulai.lower() == "1":
             print(putih+" ["+hijau+"1"+putih+"]"+putih+" Gif/Video to frame converter!")
             awal = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Video/gif Path: ")
