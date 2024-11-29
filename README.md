@@ -13,6 +13,7 @@ cara penggunaanya juga sangat mudah, gak usah ribet mikir mau gimana buat konfig
 
 # Version
 
+    1.4.8
     1.3.7
 
 # YouTube 
