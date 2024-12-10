@@ -85,7 +85,7 @@ def main():
                 print(kelabu+" ["+banorange+"INFO"+reset+kelabu+"]"+orange+" Sedang diproses..."+reset)
                 print(kelabu+" ["+merah+"!"+kelabu+"]"+putih+" Berjalan menggunakan subrpocess untuk ffmpeg!"+reset); time.sleep(1)
                 os.makedirs(akhir, exist_ok=True)
-                cmd = [ 'ffmpeg', '-i', awal, os.path.join(akhir, 'animation_%00d.png') ]
+                cmd = [ 'ffmpeg', '-i', awal, '-start_number', '0', os.path.join(akhir, 'animation_%01d.png') ]
                 subprocess.run(cmd, check=True)
                 print(putih+" ["+banhijau+"INFO"+reset+putih+"] Selesai, file disimpan di "+hijau+akhir+reset)
 
@@ -94,7 +94,7 @@ def main():
             image = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Frame(image) Path: ")
             name = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Nama theme untuk boot animation kamu: ")
             desc = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Deskripsi theme boot animation kamu: ")
-            speed = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Kecepatan animasi [3(cepat) 4(normal) 5(cocok untuk seni pixel)]: ")
+            speed = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Kecepatan animasi [1(Super) 2(Sangat cepat 3(cepat) 4(normal) 5(cocok untuk seni pixel)]: ")
 
             os.makedirs('/usr/share/plymouth/themes/'+name, exist_ok=True)
             all_file = glob.glob(os.path.join(image, '*.png'))
