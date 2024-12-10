@@ -13,6 +13,7 @@ cara penggunaanya juga sangat mudah, gak usah ribet mikir mau gimana buat konfig
 
 # Version
 
+    1.4.9 (10/12/2024) - Perbaikan bug pada menu converter video ke gambar yang menyebabkan boot animation tidak bekerja
     1.4.8 (29/11/2024)
     1.3.7 (Versi awal dari Easy Plymouth Crator)
 
