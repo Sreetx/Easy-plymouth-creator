@@ -59,7 +59,7 @@ banners = orange+"""
  | """+putih+"""Author: """+hijau+"""Sreetx       """+orange+"""                     |
  | """+putih+"""Yt: """+hijau+"""https://youtube.com/@linggachannel4781"""+orange+"""|
  | """+putih+"""Github: """+hijau+"""https://github.com/Sreetx  """+orange+"""       |
- | """+putih+"""Version: """+biru+"""1.4.8        """+orange+"""                    |
+ | """+putih+"""Version: """+biru+"""1.5.9        """+orange+"""                    |
  +===========================================+
 
  """+kelabu+"""["""+banorange+"""INFO"""+reset+kelabu+"""]"""+putih+""" Harap gunakan sudo agar program berjalan lancar
