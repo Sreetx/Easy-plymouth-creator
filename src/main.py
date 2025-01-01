@@ -49,9 +49,15 @@ def main():
  """+putih+"""["""+banhijau+"""2"""+reset+putih+"""] Create new boot animation!
  """+putih+"""["""+banhijau+"""3"""+reset+putih+"""] Manual Change boot animation
  """+putih+"""["""+banhijau+"""4"""+reset+putih+"""] Hapus Boot Animation
- """
+ """+putih+"""["""+banhijau+"""5"""+reset+putih+"""] Preview boot animation!"""+reset
         print(pilih)
         mulai = input(kelabu+" ["+banorange+">"+reset+kelabu+"]"+orange+" Input: ")
+        if mulai.lower() == "5":
+            print(putih+"\n ["+banorange+"5"+reset+putih+"] Preview boot animation")
+            timed = input(kelabu+" ["+orange+">"+kelabu+"]"+putih+" Jumlah waktu preview (detik): ")
+            os.system('sudo plymouthd && sudo plymouth --show-splash && sleep '+timed+' && sudo plymouth --quit')
+            sys.exit()
+
         if mulai.lower() == "4":
             print(putih+" ["+merah+"4"+putih+"]"+putih+" Penghapus boot animation!")
             print(putih+"["+banmerah+"W"+reset+putih+"] Pastikan sebelum menghapus boot animation, kamu sudah mengubah boot animation kamu ke yang lain")
@@ -163,6 +169,7 @@ Plymouth.SetRefreshFunction (refresh_callback);
             print(kelabu+' ['+orange+'~'+reset+kelabu+']'+putih+' Memperbarui Initramfs...')
             subprocess.run(['sudo', 'update-initramfs', '-u'], check=True)
             print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
+        
     except (KeyboardInterrupt, EOFError): print(putih+" ["+banmerah+"!"+reset+putih+"] Exit..."+reset); sys.exit()
 if __name__=="__main__":
     main()
