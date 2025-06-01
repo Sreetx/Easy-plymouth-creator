@@ -17,6 +17,7 @@ cara penggunaanya juga sangat mudah, gak usah ribet mikir mau gimana buat konfig
 
 # Version
 
+    1.9.13 (01/06/2025) - Sekarang support Arch Linux! Penambahan fitur update dan repair script lewat menu python3 main.py --update
     1.6.10 (01/01/2025) - Penambahan opsi baru Review boot animation tanpa restart dan perbaikan sedikit bug
     1.4.9 (10/12/2024) - Perbaikan bug pada menu converter video ke gambar yang menyebabkan boot animation tidak bekerja
     1.4.8 (29/11/2024)
