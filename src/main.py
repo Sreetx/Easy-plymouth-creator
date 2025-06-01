@@ -1,6 +1,6 @@
 # main.py
 #
-# Copyright 2024 Programmer
+# Copyright 2024-2025 Programmer
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,31 +17,56 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-try:
-    from color.warna import banners
-    from color.warna import orange
-    from color.warna import putih
-    from color.warna import merah
-    from color.warna import hijau
-    from color.warna import biru
-    from color.warna import borange
-    from color.warna import bputih
-    from color.warna import bhijau
-    from color.warna import bbiru
-    from color.warna import bmerah
-    from color.warna import kelabu
-    from color.warna import borangekelip
-    from color.warna import banmerah
-    from color.warna import banhijau
-    from color.warna import banorange
-    from color.warna import reset
-    import sys, os, time, webbrowser
-    import subprocess
-    import glob
-except ImportError:
-        print(' [!] Harap install ulang script ini dari repository github kami!');sys.exit()
+from argparse import ArgumentParser
+def distro_family():
+    global data
+    try:
+        with open("/etc/os-release") as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        data = "unknown"
+    info = {}
+    for line in lines:
+        if "=" in line:
+            key, val = line.strip().split("=", 1)
+            info[key] = val.strip('"')
+    id_like = info.get("ID_LIKE", "").lower()
+    distro_id = info.get("ID", "").lower()
+
+    if "debian" in id_like or distro_id == "debian" or distro_id == "ubuntu":
+        data = "debian"
+    elif "arch" in id_like or distro_id == "arch":
+        data = "arch"
+    else:
+        data = "unknown"
 
 def main():
+    try:
+        from color.warna import banners
+        from color.warna import orange
+        from color.warna import putih
+        from color.warna import merah
+        from color.warna import hijau
+        from color.warna import biru
+        from color.warna import borange
+        from color.warna import bputih
+        from color.warna import bhijau
+        from color.warna import bbiru
+        from color.warna import bmerah
+        from color.warna import kelabu
+        from color.warna import borangekelip
+        from color.warna import banmerah
+        from color.warna import banhijau
+        from color.warna import banorange
+        from color.warna import reset
+        import sys, os, time, webbrowser
+        import subprocess
+        import glob
+    except ImportError:
+            print(' [!] Harap install ulang script ini dari repository github kami!')
+            print(' [!] Try fixing it with python3 main.py --update')
+            exit(0)
+    distro_family()
     try:
         print(banners)
         pilih = putih+"""["""+banhijau+""">"""+reset+putih+"""] Opsi...
@@ -64,6 +89,8 @@ def main():
             print(kelabu+"["+hijau+">"+kelabu+"]"+putih+" Daftar Boot animation yang ada")
             subprocess.run(['ls', '/usr/share/plymouth/themes'])
             s = input(putih+"["+orange+">"+putih+"]: ")
+            if s == "":
+                print(" [!] Exit");sys.exit()
             try:
                 subprocess.run(['rm', '-r', '/usr/share/plymouth/themes/'+s], check=True)
                 print(kelabu+" ["+banhijau+"✔️"+reset+kelabu+"]"+putih+" Berhasil dihapus")
@@ -148,28 +175,111 @@ Plymouth.SetRefreshFunction (refresh_callback);
                 destination_path = os.path.join('/usr/share/plymouth/themes/'+name, image_file)
                 subprocess.run(['sudo', 'mv', source_path, destination_path], check=True)
             print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
-            print(putih+" ["+banhijau+"#"+reset+putih+"] Menambahkan boot animation baru ke entry...")
-            subprocess.run(['sudo', 'update-alternatives', '--install', '/usr/share/plymouth/themes/default.plymouth', 'default.plymouth', '/usr/share/plymouth/themes/'+name+'/'+name+'.plymouth', '100'], check=True)
-            subprocess.run(['sudo', 'update-alternatives', '--config', 'default.plymouth'], check=True)
-            print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
-            terapkan = input(putih+" ["+orange+"?"+reset+putih+"] Apakah anda mau menerapkan nya langsung ke initramfs? [y/n]: ")
-            if terapkan.lower() == "y" or terapkan.lower() == "Y":
+            if data == "debian":
+                print(putih+" ["+banhijau+"#"+reset+putih+"] Menambahkan boot animation baru ke entry...")
+                subprocess.run(['sudo', 'update-alternatives', '--install', '/usr/share/plymouth/themes/default.plymouth', 'default.plymouth', '/usr/share/plymouth/themes/'+name+'/'+name+'.plymouth', '100'], check=True)
+                subprocess.run(['sudo', 'update-alternatives', '--config', 'default.plymouth'], check=True)
+                print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
+                terapkan = input(putih+" ["+orange+"?"+reset+putih+"] Apakah anda mau menerapkan nya langsung ke initramfs? [y/n]: ")
+                if terapkan.lower() == "y" or terapkan.lower() == "Y":
+                    print(putih+" ["+banhijau+"#"+reset+putih+"] Menerapkan konfigurasi ke initramfs...")
+                    subprocess.run(['sudo', 'update-initramfs', '-u'], check=True)
+                    print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
+                    print(kelabu+' ['+hijau+'#'+reset+kelabu+']'+putih+' Terima kasih karena telah menggunakan, selamat menikmati tampilan boot animation anda'); sys.exit()
+                else:
+                    print(kelabu+' ['+hijau+'#'+reset+kelabu+']'+putih+' Terima kasih karena telah menggunakan, selamat menikmati tampilan boot animation anda'); sys.exit()
+                    print(kelabu+' ['+banhijau+'#'+reset+kelabu+']'+putih+' Silahkan ketik sendiri "sudo update-initramfs -u" tapi tetap berhati hati dengan command tersebut'+reset);sys.exit()
+            if data == "arch":
                 print(putih+" ["+banhijau+"#"+reset+putih+"] Menerapkan konfigurasi ke initramfs...")
-                subprocess.run(['sudo', 'update-initramfs', '-u'], check=True)
+                subprocess.run(["sudo", "plymouth-set-default-theme", "-R", str(name)], check=True)
                 print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
                 print(kelabu+' ['+hijau+'#'+reset+kelabu+']'+putih+' Terima kasih karena telah menggunakan, selamat menikmati tampilan boot animation anda'); sys.exit()
-            else:
-                print(kelabu+' ['+hijau+'#'+reset+kelabu+']'+putih+' Terima kasih karena telah menggunakan, selamat menikmati tampilan boot animation anda'); sys.exit()
-                print(kelabu+' ['+banhijau+'#'+reset+kelabu+']'+putih+' Silahkan ketik sendiri "sudo update-initramfs -u" tapi tetap berhati hati dengan command tersebut'+reset);sys.exit()
         if mulai.lower() == "3":
-            print(putih+" ["+hijau+"3"+putih+"]"+putih+" Plymouth boot anmiation changer!")
-            print(kelabu+' ['+orange+'#'+reset+kelabu+']'+putih+' Memulai subprocess...')
-            print(kelabu+" ["+orange+"#"+reset+kelabu+"]"+putih+" Menjalankan update-alternatives...")
-            subprocess.run(['sudo', 'update-alternatives', '--config', 'default.plymouth'], check=True)
-            print(kelabu+' ['+orange+'~'+reset+kelabu+']'+putih+' Memperbarui Initramfs...')
-            subprocess.run(['sudo', 'update-initramfs', '-u'], check=True)
-            print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...')
-        
+            if data == "debian":
+                print(putih+" ["+hijau+"3"+putih+"]"+putih+" Plymouth boot anmiation changer!")
+                print(kelabu+' ['+orange+'#'+reset+kelabu+']'+putih+' Memulai subprocess...')
+                print(kelabu+" ["+orange+"#"+reset+kelabu+"]"+putih+" Menjalankan update-alternatives...")
+                subprocess.run(['sudo', 'update-alternatives', '--config', 'default.plymouth'], check=True)
+                print(kelabu+' ['+orange+'~'+reset+kelabu+']'+putih+' Memperbarui Initramfs...')
+                subprocess.run(['sudo', 'update-initramfs', '-u'], check=True)
+                print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...');sys.exit()
+            if data == "arch":
+                print(putih+" ["+hijau+"3"+putih+"]"+putih+" Plymouth boot anmiation changer!")
+                print(putih+" ["+orange+">"+putih+"] Plymouth Theme Lists:"+reset)
+                subprocess.run(["ls", "/usr/share/plymouth/themes/"], check=True)
+                pillh = input(putih+" ["+orange+">"+putih+"]: "+reset)
+                subprocess.run(["sudo", "plymouth-set-default-theme", "-R", str(pillh)], check=True)
+                print(kelabu+' ['+banhijau+'✔️'+reset+kelabu+']'+putih+' Selesai...');sys.exit()
+
     except (KeyboardInterrupt, EOFError): print(putih+" ["+banmerah+"!"+reset+putih+"] Exit..."+reset); sys.exit()
-if __name__=="__main__":
+
+menu = ArgumentParser()
+menu.add_argument('--update', dest='update', action='store_true', default=False)
+option = menu.parse_args()
+
+update = option.update
+if update:
+    import socket
+    try:
+        global requests
+        from color.warna import banners
+        from color.warna import orange
+        from color.warna import putih
+        from color.warna import merah
+        from color.warna import hijau
+        from color.warna import biru
+        from color.warna import borange
+        from color.warna import bputih
+        from color.warna import bhijau
+        from color.warna import bbiru
+        from color.warna import bmerah
+        from color.warna import kelabu
+        from color.warna import borangekelip
+        from color.warna import banmerah
+        from color.warna import banhijau
+        from color.warna import banorange
+        from color.warna import reset
+        import sys, os, time, webbrowser
+        import subprocess
+        import glob
+    except ImportError:
+        #teks tanpa warna
+        act1 = " [UPDATE] Checking Internet Connection..."
+        act2 = " [UPDATE] Installing Componnent..."
+        act3 = " [UPDATE] Installing main.py"
+        act4 = " [UPDATE] Installing warna.py."
+        act5 = " [UPDATE] Selesai"
+        act6 = " [!] Check the internet connection"
+    #teks dengan warna
+    import requests, os, sys
+    if os.path.exists("color/warna.py"):
+        act1 = putih+" ["+banorange+"UPDATE"+reset+putih+"] Checking Internet Connection..."+reset
+        act2 = putih+" ["+banorange+"UPDATE"+reset+putih+"] Installing Componnent..."+reset
+        act3 = putih+" ["+banorange+"UPDATE"+reset+putih+"] Installing main.py"+reset
+        act4 = putih+" ["+banorange+"UPDATE"+reset+putih+"] Installing warna.py."+reset
+        act5 = putih+" ["+banorange+"UPDATE"+reset+putih+"] Selesai"+reset
+        act6 = putih+" ["+merah+"!"+reset+putih+"] Check the internet connection"+reset
+    else:
+        pass
+    try:
+        print("\n"+act1)
+        socket.create_connection(('8.8.4.4', 443), timeout=5)
+    except socket.gaierror:
+        print(act6)
+    print(act2)
+    main_file = requests.get("https://raw.githubusercontent.com/Sreetx/Easy-plymouth-creator/refs/heads/master/src/main.py")
+    warna_file = requests.get("https://raw.githubusercontent.com/Sreetx/Easy-plymouth-creator/refs/heads/master/src/color/warna.py")
+    main_file_en = main_file.content.decode('utf-8')
+    warna_file_en = warna_file.content.decode('utf-8')
+    os.makedirs('color', exist_ok=True)
+    print(act3)
+    with open ("main.py", 'w', encoding='utf-8') as f1:
+        f1.write(main_file_en)
+    print(act4)
+    with open("color/warna.py", 'w', encoding='utf-8') as f2:
+        f2.write(warna_file_en)
+    print(act5+"\n");sys.exit()
+
+else:
     main()
+    
